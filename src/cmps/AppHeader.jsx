@@ -11,7 +11,7 @@ export function AppHeader() {
 
         <header className="app-header full main-layout">
             <section className="header-container">
-                <h1>React Car App!!!</h1>
+                <h1>Toys!!</h1>
                 <nav className="app-nav">
                     <NavLink to="/" >Home</NavLink>
                     <NavLink to="/about" >About</NavLink>

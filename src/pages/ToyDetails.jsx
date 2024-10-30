@@ -26,7 +26,7 @@ export function ToyDetails() {
     if (!toy) return <div>Loading...</div>
 
     return (
-        <section>
+        <section className="toy-details">
             <h3>{toy.name} {toy.price}</h3>
             <h6>Labels: {toy.labels.join(', ')}</h6>
             <h6>Created: {toy.createdAt}</h6>

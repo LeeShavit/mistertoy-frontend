@@ -1,0 +1,42 @@
+.toy-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh; 
+    background-color: #f5f5f5;
+    padding: 50px; 
+  }
+  
+  .toy-details h3 {
+    font-size: 24px;
+    margin-bottom: 15px;
+  }
+  
+  .toy-details h6 {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #666; 
+  }
+  
+  .toy-details a {
+    padding: 10px 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-top: 20px;
+    text-decoration: none;
+    color: #333;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .toy-details a:hover {
+    background-color: #eee;
+  }
+  
+  .stock.in {
+    color: green;
+  }
+  
+  .stock.out-of {
+    color: red;
+  }

@@ -8,8 +8,8 @@ import { toyService } from "../services/toy.service"
 
 export function ToyFilter({ filterBy, setFilterBy }) {
 
-    const [filterByToEdit, setFilterByToEdit] = useState({...filterBy})
-    const options= toyService.getLabels()
+    const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
+    const options = toyService.getLabels()
     const animatedComponents = makeAnimated();
 
     useEffect(() => {
@@ -78,10 +78,13 @@ export function ToyFilter({ filterBy, setFilterBy }) {
                         onChange={handleLabelChange}
                     />
 
-                    <button>filter</button>
                 </div>
             </form>
-            <button onClick={() => setFilterByToEdit(toyService.getDefaultFilter())}>Clear</button>
+            <div className="filter-btns">
+
+                <button onClick={onSaveFilterBy}>filter</button>
+                <button onClick={() => setFilterByToEdit(toyService.getDefaultFilter())}>Clear</button>
+            </div>
         </section>
 
 

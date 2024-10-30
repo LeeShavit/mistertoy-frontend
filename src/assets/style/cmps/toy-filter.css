@@ -1,0 +1,47 @@
+.filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+    padding: 1em;
+    text-align: center;
+  }
+
+
+  .filter form{
+    width: 100%;
+  }
+  
+  .filter label {
+    font-size: 14px;
+    padding: 5px;
+    width: 60px;
+    text-align: right;
+  }
+
+.filter input, .filter select, .filter button {
+    font-size: 14px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-bottom: 1em;
+  }
+  
+ 
+  
+  .filter input, .filter select {
+    flex: 1; /* Make inputs take up available space */
+  }
+  
+  .filter .filter-btns{
+    display: flex;
+    justify-content: center;
+    gap: 2em;
+    width: 100%;
+  }
+
+  .filter button {
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    border: none;
+  }
