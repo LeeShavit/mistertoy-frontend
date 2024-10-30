@@ -1,11 +1,9 @@
-import { utilService } from './util.service.js'
-import { storageService } from './async-storage.service.js'
+import { httpService } from './http.service.js'
 
 const gLabels = ['On wheels', 'Box game', 'Art', 'Baby', 'Doll', 'Puzzle',
     'Outdoor', 'Battery Powered']
 
-const STORAGE_KEY = 'toy key'
-_createToys()
+const BASE_URL = 'toy/'
 
 export const toyService = {
     query,
@@ -21,45 +19,23 @@ export const toyService = {
 }
 
 function query(filterBy) {
-    return storageService.query(STORAGE_KEY)
-        .then(toys => {
-            if (filterBy.name) {
-                const regExp = new RegExp(filterBy.name, 'i')
-                toys = toys.filter(toy => regExp.test(toy.name))
-            }
-            if (filterBy.price) toys = toys.filter(toy => toy.price > filterBy.price)
-            if (filterBy.inStock === 'true') toys = toys.filter(toy => toy.inStock)
-            if (filterBy.inStock === 'false') toys = toys.filter(toy => !toy.inStock)
-            if (filterBy.labels.length !== 0) toys= toys.filter(toy=> filterBy.labels.some(label => toy.labels.includes(label.value)))
-            if (filterBy.sort) {
-                switch (filterBy.sort) {
-                    case 'name': toys.sort((a, b) => a.name.localeCompare(b.name))
-                        break
-                    case 'price': toys.sort((a, b) => a.price - b.price)
-                        break
-                    case 'created': toys.sort((a, b) => b.createdAt - a.createdAt)
-                        break
-                }
-            }
-            return toys
-        })
+    return httpService.get(BASE_URL, filterBy)
 }
 
 function get(toyId) {
-    return storageService.get(STORAGE_KEY, toyId)
+    return httpService.get(BASE_URL+ toyId)
 }
 
 function remove(toyId) {
-    return storageService.remove(STORAGE_KEY, toyId)
+    return httpService.delete(BASE_URL+ toyId)
 
 }
 
 function save(toy) {
     if (toy._id) {
-        return storageService.put(STORAGE_KEY, toy)
+        return httpService.put(BASE_URL + toy._id, toy)
     } else {
-        // when switching to backend - remove the next line
-        return storageService.post(STORAGE_KEY, toy)
+        httpService.post( BASE_URL, toy)
     }
 }
 
@@ -92,31 +68,31 @@ function getFilterFromSearchParams(searchParams) {
     return filterBy
 }
 
-function getLabels(){
-    return gLabels.map(label => ({ value: label, label}))
+function getLabels() {
+    return gLabels.map(label => ({ value: label, label }))
 }
 
-function _createToy() {
-    return {
-        _id: utilService.makeId(5),
-        name: utilService.makeLorem(2),
-        price: utilService.getRandomIntInclusive(1, 20) * 10,
-        labels: [gLabels[utilService.getRandomIntInclusive(0, 7)], gLabels[utilService.getRandomIntInclusive(0, 7)]],
-        createdAt: 1631031 + utilService.getRandomIntInclusive(100000, 999999),
-        inStock: (utilService.getRandomIntInclusive(1, 4) === 1) ? true : false
-    }
-}
+// function _createToy() {
+//     return {
+//         _id: utilService.makeId(5),
+//         name: utilService.makeLorem(2),
+//         price: utilService.getRandomIntInclusive(1, 20) * 10,
+//         labels: [gLabels[utilService.getRandomIntInclusive(0, 7)], gLabels[utilService.getRandomIntInclusive(0, 7)]],
+//         createdAt: 1631031 + utilService.getRandomIntInclusive(100000, 999999),
+//         inStock: (utilService.getRandomIntInclusive(1, 4) === 1) ? true : false
+//     }
+// }
 
-function _createToys() {
-    let toys = utilService.loadFromStorage(STORAGE_KEY)
-    if (!toys || !toys.length) {
-        toys = []
-        for (let i = 0; i < 20; i++) {
-            toys.push(_createToy())
-        }
-        utilService.saveToStorage(STORAGE_KEY, toys)
-    }
-}
+// function _createToys() {
+//     let toys = utilService.loadFromStorage(STORAGE_KEY)
+//     if (!toys || !toys.length) {
+//         toys = []
+//         for (let i = 0; i < 20; i++) {
+//             toys.push(_createToy())
+//         }
+//         utilService.saveToStorage(STORAGE_KEY, toys)
+//     }
+// }
 
 // const labels = ['On wheels', 'Box game', 'Art', 'Baby', 'Doll', 'Puzzle',
 //     'Outdoor', 'Battery Powered']
