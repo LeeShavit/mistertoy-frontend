@@ -5,6 +5,7 @@ import { Provider } from 'react-redux'
 
 import { HomePage } from './pages/HomePage.jsx'
 import { AboutUs } from './pages/AboutUs.jsx'
+import { Dashboard } from './pages/Dashboard.jsx'
 import { ToyIndex } from './pages/ToyIndex.jsx'
 import { ToyDetails } from './pages/ToyDetails.jsx'
 import { ToyEdit } from './pages/ToyEdit.jsx'
@@ -22,7 +23,8 @@ function App() {
           <Route element={<AboutUs />} path='/about' />
           <Route element={<ToyIndex />} path='/toy' />
           <Route element={<ToyDetails />} path='/toy/:toyId' />
-          <Route element={<ToyEdit />} path='/toy/edit/:toyId' />
+          <Route element={<ToyEdit />} path='/toy/edit/:toyId?' />
+          <Route element={<Dashboard />} path='/dashboard' />
         </Routes>
       </Router>
     </Provider>

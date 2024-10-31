@@ -16,6 +16,7 @@ export const toyService = {
     getLabels,
 
     getFilterFromSearchParams,
+    getLabelsStats,
 }
 
 function query(filterBy) {
@@ -23,11 +24,11 @@ function query(filterBy) {
 }
 
 function get(toyId) {
-    return httpService.get(BASE_URL+ toyId)
+    return httpService.get(BASE_URL + toyId)
 }
 
 function remove(toyId) {
-    return httpService.delete(BASE_URL+ toyId)
+    return httpService.delete(BASE_URL + toyId)
 
 }
 
@@ -35,7 +36,7 @@ function save(toy) {
     if (toy._id) {
         return httpService.put(BASE_URL + toy._id, toy)
     } else {
-        httpService.post( BASE_URL, toy)
+        return httpService.post(BASE_URL, toy)
     }
 }
 
@@ -69,8 +70,39 @@ function getFilterFromSearchParams(searchParams) {
 }
 
 function getLabels() {
-    return gLabels.map(label => ({ value: label, label }))
+    return [...gLabels]
 }
+
+function getLabelsStats() {
+    return httpService.get(BASE_URL)
+        .then(toys => {
+            const {toysCount, prices, toysInStock, date} = gLabels.reduce((acc, label, idx) => {
+                acc.toysCount[idx] = 0
+                 acc.prices[idx] = 0
+                 acc.toysInStock[idx] = 0
+                 acc.date[idx] =0
+                toys.forEach(toy => {
+                    if (toy.labels.includes(label)) {
+                        acc.toysCount[idx]++
+                        acc.prices[idx] += toy.price
+                        if(toy.inStock) acc.toysInStock[idx] ++
+                    }
+                    const date = new Date(toy.createdAt)
+                    if (date.getMonth() === idx) acc.date[idx]++
+                }) 
+                acc.prices[idx]= acc.prices[idx]/ acc.toysCount[idx]
+                return acc
+            }, { toysCount: [], prices: [], toysInStock: [] , date: []})
+
+            return { labels: { ...gLabels }, toysCount, prices, toysInStock , date}
+        })
+        .catch(err => {
+            console.log('failed to get stats for toys' + err)
+            throw err
+        })
+
+}
+
 
 // function _createToy() {
 //     return {

@@ -1,9 +1,6 @@
 .toy-list {
     display: flex;
-    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
-    list-style: none; /* Remove default bullet points */
-    margin: 0; /* Remove default margin */
-    padding: 0; /* Remove default padding */
+    flex-wrap: wrap;
   }
   
   .toy-card {
@@ -27,6 +24,7 @@
   
   .toy-actions button,
   .toy-actions a {
+    color: white;
     padding: 5px 5px;
     border: none;
     border-radius: 3px;

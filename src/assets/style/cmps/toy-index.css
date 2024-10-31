@@ -1,0 +1,13 @@
+.toy-index a{
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    font-size: .9em;
+    padding: .3em;
+    border: none;
+    border-radius: 3px;
+}
+
+.toy-index a:not(li a){
+    margin-inline-start: 1em;
+}

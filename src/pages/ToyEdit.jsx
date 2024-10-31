@@ -2,8 +2,10 @@ import { toyService } from "../services/toy.service"
 import { useNavigate, Link, useParams } from "react-router-dom"
 import { useState, useEffect } from "react"
 
+
 import { saveToy } from "../store/actions/toy.actions"
-import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service";
+import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service"
+import { MultiSelect } from "./MultiSelect"
 
 
 export function ToyEdit() {
@@ -36,12 +38,18 @@ export function ToyEdit() {
         setToyToEdit(prevToy => ({ ...prevToy, [field]: value }))
     }
 
+    function handleChangeLabels(labels){
+        setToyToEdit(prevToy => ({ ...prevToy, labels }))
+
+    }
+
 
     function onSaveToy(ev) {
         ev.preventDefault()
         saveToy(toyToEdit)
-            .then(toy => {
+            .then(() => {
                 showSuccessMsg('Toy save successfully')
+                navigate('/toy')
             })
             .catch(() => {
                 showErrorMsg('Failed to save toy')
@@ -78,7 +86,7 @@ export function ToyEdit() {
                     value={toyToEdit.inStock}
                     onChange={handleChange}
                 />
-
+                <MultiSelect parentLabels={toyToEdit.labels} handleChangeLabels={handleChangeLabels} />
 
                 <div>
                     <button>{toyToEdit._id ? 'Save' : 'Add'}</button>
