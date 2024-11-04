@@ -1,9 +1,13 @@
+import { LocationsMap } from "../cmps/LocationsMap.jsx";
 
 
 export function AboutUs() {
 
 
     return (
-        <h3>About Us..</h3>
+        <>
+            <h3>Our locations</h3>
+            <LocationsMap/>
+        </>
     )
 }

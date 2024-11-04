@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react"
 import Select from "react-select"
 import makeAnimated from 'react-select/animated';
+import { MultiSelect } from "./MultiSelect"
+import ClearIcon from '@mui/icons-material/Clear';
+import SearchIcon from '@mui/icons-material/Search';
 
 
 import { toyService } from "../services/toy.service"
@@ -69,21 +72,15 @@ export function ToyFilter({ filterBy, setFilterBy }) {
                         <option value="price">Price</option>
                         <option value="created">Date</option>
                     </select>
-                    <Select
-                        options={options}
-                        components={animatedComponents}
-                        closeMenuOnSelect={false}
-                        isMulti
-                        value={filterByToEdit.labels}
-                        onChange={handleLabelChange}
-                    />
+                    <MultiSelect className="select" parentLabels={filterByToEdit.labels} handleChangeLabels={handleLabelChange} />
+
 
                 </div>
             </form>
             <div className="filter-btns">
 
-                <button onClick={onSaveFilterBy}>filter</button>
-                <button onClick={() => setFilterByToEdit(toyService.getDefaultFilter())}>Clear</button>
+                <button className="btn" onClick={onSaveFilterBy}><SearchIcon/></button>
+                <button className="btn" onClick={() => setFilterByToEdit(toyService.getDefaultFilter())}><ClearIcon/></button>
             </div>
         </section>
 

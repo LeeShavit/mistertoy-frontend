@@ -1,0 +1,32 @@
+@use 'sass:color';
+
+.user-msg {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+
+    &.success {
+        background-color: brighten($clrGood, 20%);
+        border-color: brighten($clrGood, 10%);
+        color: $clrGood;
+    }
+    
+    &.error {
+        background-color: brighten($clrBad, 20%);
+        border-color: brighten($clrBad, 20%);
+        color: $clrBad;
+    }
+
+    button {
+        float: right;
+        margin-left: 10px;
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+    }
+}
+

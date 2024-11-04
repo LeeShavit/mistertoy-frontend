@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import EditIcon from '@mui/icons-material/Edit';
+
+
 import { toyService } from "../services/toy.service";
 import { showErrorMsg } from "../services/event-bus.service";
 
@@ -23,16 +27,21 @@ export function ToyDetails() {
             })
     }
 
+    function getFullDate(ts){
+        const date= new Date(ts)
+        return date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+    }
+
     if (!toy) return <div>Loading...</div>
 
     return (
         <section className="toy-details">
             <h3>{toy.name} {toy.price}</h3>
             <h6>Labels: {toy.labels.join(', ')}</h6>
-            <h6>Created: {toy.createdAt}</h6>
+            <h6>Created: {getFullDate(toy.createdAt)} </h6>
             <div className={`stock ${toy.inStock ? "in" : "out-of"}`}>{toy.inStock ? 'In Stock!' : 'Out Of Stock'}</div>
-            <Link to={`/toy/edit/${toy._id}`}>Edit</Link>
-            <Link to='/toy'>Back</Link>
+            <Link className="btn" to={`/toy/edit/${toy._id}`}><EditIcon/></Link>
+            <Link className="btn" to='/toy'><ArrowBackIcon/></Link>
         </section>
     )
 }

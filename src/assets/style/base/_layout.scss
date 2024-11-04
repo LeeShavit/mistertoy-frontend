@@ -1,0 +1,22 @@
+.main-layout{
+    display: grid;
+    grid-template-columns: $layout-padding 1fr $layout-padding;
+
+    .full{
+        grid-column: 1/-1;
+    }
+
+    > *:not(.full){
+        grid-column: 2;
+    }
+
+    @include for-s-layout{
+        @include layoutGTC($break-s)
+    }
+    @include for-m-layout{
+        @include layoutGTC($break-m)
+    }
+    @include for-l-layout{
+        @include layoutGTC($break-l)
+    }
+}

@@ -1,11 +1,11 @@
 import { toyService } from "../services/toy.service"
 import { useNavigate, Link, useParams } from "react-router-dom"
 import { useState, useEffect } from "react"
-
+import ClearIcon from '@mui/icons-material/Clear';
 
 import { saveToy } from "../store/actions/toy.actions"
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service"
-import { MultiSelect } from "./MultiSelect"
+import { MultiSelect } from "../cmps/MultiSelect"
 
 
 export function ToyEdit() {
@@ -89,8 +89,8 @@ export function ToyEdit() {
                 <MultiSelect parentLabels={toyToEdit.labels} handleChangeLabels={handleChangeLabels} />
 
                 <div>
-                    <button>{toyToEdit._id ? 'Save' : 'Add'}</button>
-                    <Link to="/toy">Cancel</Link>
+                    <button className="btn">{toyToEdit._id ? 'Save' : 'Add'}</button>
+                    <Link className="btn" to="/toy"><ClearIcon/></Link>
                 </div>
             </form>
         </section>

@@ -50,7 +50,7 @@ function getEmptyToy() {
 }
 
 function getDefaultFilter() {
-    return { name: '', price: '', inStock: '', labels: '', sort: '', pageIdx: '' }
+    return { name: '', price: '', inStock: '', labels: [], sort: '', pageIdx: '' }
     //filter by:
     // name= use debounce
     // inStock = true/false/null

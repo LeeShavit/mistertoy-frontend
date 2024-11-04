@@ -1,0 +1,25 @@
+//color palette
+
+$clr1: #f0f0f0;
+$clr2: #fff6e3;
+$clr3: #bfecff;
+$clr4: #cdc1ff;
+$clr5: #ffccea;
+
+$clrTxt: #333333;
+
+$clrGood: #155724;
+$clrBad: #721c24;;
+
+//layout
+$layout-padding: 20px;
+
+
+//breakpoints
+$break-s: 500px;
+$break-m: 700px;
+$break-l: 1200px;
+
+$padded-break-narrow: $break-s + $layout-padding * 2;
+$padded-break-normal: $break-m + $layout-padding * 2;
+$padded-break-wide: $break-l + $layout-padding * 2;

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector, useStore } from "react-redux";
+import AddIcon from '@mui/icons-material/Add';
 
 import { loadToys, removeToy, saveToy } from "../store/actions/toy.actions.js";
 import { toyService } from "../services/toy.service.js";
@@ -35,7 +36,7 @@ export function ToyIndex() {
     return (
         <main className="toy-index">
         <ToyFilter filterBy={filterBy} setFilterBy={setFilterBy}/>
-        <Link to='/toy/edit'>Add new Toy</Link>
+        <Link to='/toy/edit' className="btn"><AddIcon/></Link>
         <ToyList toys={toys} onRemoveToy={onRemoveToy}/>
         </main>
     )

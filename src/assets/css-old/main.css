@@ -2,7 +2,6 @@
 @import 'base/helpers.css';
 @import 'base/layout.css';
 
-@import 'setup/vars.css';
 
 @import 'cmps/about-us.css';
 @import 'cmps/app-header.css';

@@ -1,0 +1,32 @@
+.location-map{
+    display: flex;
+    padding: 10px;
+    border: 1px solid  rgba(0, 0, 0, 0.15);
+    border-radius: em(8px);
+    margin: 10px;
+    box-shadow: rgba(0, 0, 0, 0.292) 0 2px 4px;
+
+    ul{
+        width: 25%;
+    }
+
+    li{
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+
+        padding: .5em;
+        border-radius: 8px;
+        margin: 0 10px 20px 0;
+
+        &:hover{
+            background-color: $clr2;
+            border-color: rgba(0, 0, 0, 0.15);
+            box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+        }
+
+        h4{
+            margin: 0;
+        }
+    }
+}

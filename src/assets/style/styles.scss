@@ -1,0 +1,21 @@
+//setup
+@import 'setup/vars';
+@import 'setup/typography';
+@import 'setup/mixins';
+@import 'setup/function';
+
+//base
+@import 'base/base.scss';
+@import 'base/helpers.scss';
+@import 'base/layout.scss';
+
+@import 'cmps/user-msg';
+@import 'cmps/toy-filter';
+@import 'cmps/toy-index';
+@import 'cmps/toy-list';
+@import 'cmps/toy-edit';
+@import 'cmps/toy-details';
+@import 'cmps/app-header';
+@import 'cmps/about-us';
+@import 'cmps/home-page';
+@import 'cmps/locations-map';

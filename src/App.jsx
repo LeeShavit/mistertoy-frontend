@@ -1,4 +1,4 @@
-import './assets/style/main.css'
+import './assets/style/styles.scss'
 
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
 import { Provider } from 'react-redux'
@@ -15,6 +15,7 @@ import { AppHeader } from './cmps/AppHeader.jsx'
 function App() {
 
   return (
+    <div  className="main-layout">
     <Provider store={store}>
       <Router>
         <AppHeader/>
@@ -28,6 +29,7 @@ function App() {
         </Routes>
       </Router>
     </Provider>
+    </div>
   )
 }
 
