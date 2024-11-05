@@ -17,6 +17,9 @@ export const toyService = {
 
     getFilterFromSearchParams,
     getLabelsStats,
+
+    addToyMsg,
+    removeToyMsg
 }
 
 function query(filterBy) {
@@ -38,6 +41,14 @@ function save(toy) {
     } else {
         return httpService.post(BASE_URL, toy)
     }
+}
+
+function addToyMsg(toyId, msg) {
+    return httpService.post(BASE_URL + toyId + '/msg', { txt: msg })
+}
+
+function removeToyMsg(toyId, msgId) {
+    return httpService.delete(BASE_URL + toyId + '/msg/' + msgId)
 }
 
 function getEmptyToy() {
@@ -73,34 +84,31 @@ function getLabels() {
     return [...gLabels]
 }
 
-function getLabelsStats() {
-    return httpService.get(BASE_URL)
-        .then(toys => {
-            const {toysCount, prices, toysInStock, date} = gLabels.reduce((acc, label, idx) => {
-                acc.toysCount[idx] = 0
-                 acc.prices[idx] = 0
-                 acc.toysInStock[idx] = 0
-                 acc.date[idx] =0
-                toys.forEach(toy => {
-                    if (toy.labels.includes(label)) {
-                        acc.toysCount[idx]++
-                        acc.prices[idx] += toy.price
-                        if(toy.inStock) acc.toysInStock[idx] ++
-                    }
-                    const date = new Date(toy.createdAt)
-                    if (date.getMonth() === idx) acc.date[idx]++
-                }) 
-                acc.prices[idx]= acc.prices[idx]/ acc.toysCount[idx]
-                return acc
-            }, { toysCount: [], prices: [], toysInStock: [] , date: []})
-
-            return { labels: { ...gLabels }, toysCount, prices, toysInStock , date}
-        })
-        .catch(err => {
-            console.log('failed to get stats for toys' + err)
-            throw err
-        })
-
+async function getLabelsStats() {
+    try {
+        const toys = await httpService.get(BASE_URL)
+        const stats = gLabels.reduce((acc, label, idx) => {
+            acc.toysCount[idx] = 0
+            acc.prices[idx] = 0
+            acc.toysInStock[idx] = 0
+            acc.date[idx] = 0
+            toys.forEach(toy => {
+                if (toy.labels.includes(label)) {
+                    acc.toysCount[idx]++
+                    acc.prices[idx] += toy.price
+                    if (toy.inStock) acc.toysInStock[idx]++
+                }
+                const date = new Date(toy.createdAt)
+                if (date.getMonth() === idx) acc.date[idx]++
+            })
+            acc.prices[idx] = acc.prices[idx] / acc.toysCount[idx]
+            return acc
+        }, { toysCount: [], prices: [], toysInStock: [], date: [] })
+        return { labels: { ...gLabels }, ...stats }
+    } catch (err) {
+        console.log('failed to get stats for toys' + err)
+        throw err
+    }
 }
 
 

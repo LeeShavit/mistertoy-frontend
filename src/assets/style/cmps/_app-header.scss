@@ -17,6 +17,7 @@
 
     .app-nav {
         display: flex;
+        align-items: center;
         gap: 20px;
     }
 
@@ -33,6 +34,10 @@
 
     .menu-btn {
         display: none;
+    }
+
+    img{
+        height: 40px;
     }
 
 

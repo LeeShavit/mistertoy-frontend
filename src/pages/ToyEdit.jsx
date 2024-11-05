@@ -20,14 +20,15 @@ export function ToyEdit() {
             loadToy()
     }, [])
 
-    function loadToy() {
-        toyService.get(toyId)
-            .then(setToyToEdit)
-            .catch(err => {
-                console.log('Toy details-> failed to load toy', err)
-                showErrorMsg('Toy not found')
-                navigate('/')
-            })
+    async function loadToy() {
+        try {
+            const toy = await toyService.get(toyId)
+            setToyToEdit(toy)
+        } catch (err) {
+            console.log('Toy Edit-> failed to load toy', err)
+            showErrorMsg('Toy not found')
+            navigate('/')
+        }
     }
 
 
@@ -38,22 +39,21 @@ export function ToyEdit() {
         setToyToEdit(prevToy => ({ ...prevToy, [field]: value }))
     }
 
-    function handleChangeLabels(labels){
+    function handleChangeLabels(labels) {
         setToyToEdit(prevToy => ({ ...prevToy, labels }))
 
     }
 
 
-    function onSaveToy(ev) {
+    async function onSaveToy(ev) {
         ev.preventDefault()
-        saveToy(toyToEdit)
-            .then(() => {
-                showSuccessMsg('Toy save successfully')
-                navigate('/toy')
-            })
-            .catch(() => {
-                showErrorMsg('Failed to save toy')
-            })
+        try {
+            await saveToy(toyToEdit)
+            showSuccessMsg('Toy save successfully')
+            navigate('/toy')
+        } catch (err) {
+            showErrorMsg('Failed to save toy')
+        }
     }
 
 
@@ -90,7 +90,7 @@ export function ToyEdit() {
 
                 <div>
                     <button className="btn">{toyToEdit._id ? 'Save' : 'Add'}</button>
-                    <Link className="btn" to="/toy"><ClearIcon/></Link>
+                    <Link className="btn" to="/toy"><ClearIcon /></Link>
                 </div>
             </form>
         </section>

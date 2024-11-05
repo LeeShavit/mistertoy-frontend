@@ -24,7 +24,8 @@ ChartJS.register(
   Title,
   Tooltip, 
   Legend
-);
+)
+
 
 import { toyService } from "../services/toy.service.js"
 
@@ -55,11 +56,17 @@ export function Dashboard() {
 
 
     useEffect(() => {
-        toyService.getLabelsStats()
-            .then(data => {
-                setDataForCharts(data)
-            })
+        loadStats()
     }, [])
+
+    async function loadStats() {
+        try {
+            const data = await toyService.getLabelsStats()
+            setDataForCharts(data)
+        } catch (err) {
+            throw err
+        }
+    }
 
     //            return {  toysInStock 
 
@@ -134,12 +141,15 @@ export function Dashboard() {
     if (!dataForCharts) return <h4> Loading ... </h4>
 
     return (
-        <>
-            <Doughnut data={toysPerLabel} options={options} />
+        
+            <section className="dashboard">
+            <h3>Toys Per Label:</h3>
+            <Doughnut data={toysPerLabel}/>
+            <h3>Average Price Per Label:</h3>
             <Pie data={AvgPricePerLabel} options={options}/>
+            <h3>Added Toys Per Month:</h3>
             <Line data={addedToysPerMonth} options={options} />
             {/* <Bar data={inStockToysPerLabels} options={barOptions}/> */}
-            <h5>Data</h5>
-        </>
+            </section>
     )
 }

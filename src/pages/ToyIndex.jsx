@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector, useStore } from "react-redux";
 import AddIcon from '@mui/icons-material/Add';
 
-import { loadToys, removeToy, saveToy } from "../store/actions/toy.actions.js";
+import { loadToys, removeToy } from "../store/actions/toy.actions.js";
 import { toyService } from "../services/toy.service.js";
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service";
 import { ToyFilter } from "../cmps/ToyFilter.jsx";
@@ -14,30 +14,27 @@ import { Link } from "react-router-dom";
 export function ToyIndex() {
 
     const toys = useSelector(storeState => storeState.toyModule.toys)
-    const [filterBy, setFilterBy]= useState(toyService.getDefaultFilter())
+    const [filterBy, setFilterBy] = useState(toyService.getDefaultFilter())
 
-    useEffect(()=>{
-        console.log(filterBy)
+    useEffect(() => {
         loadToys(filterBy)
-    },[filterBy])
+    }, [filterBy])
 
-    function onRemoveToy(toyId){
-        removeToy(toyId)
-        .then(()=>{
+    async function onRemoveToy(toyId) {
+        try {
+            await removeToy(toyId)
             showSuccessMsg('Toy removed successfully')
-        })
-        .catch(()=>{
+        } catch (err) {
             showErrorMsg('Failed to remove toy')
-        })
+        }
     }
 
-    
-    if(!toys || toys.length===0) return <div>Loading..</div>
+    if (!toys || toys.length === 0) return <div>Loading..</div>
     return (
         <main className="toy-index">
-        <ToyFilter filterBy={filterBy} setFilterBy={setFilterBy}/>
-        <Link to='/toy/edit' className="btn"><AddIcon/></Link>
-        <ToyList toys={toys} onRemoveToy={onRemoveToy}/>
+            <ToyFilter filterBy={filterBy} setFilterBy={setFilterBy} />
+            <Link to='/toy/edit' className="btn"><AddIcon /></Link>
+            <ToyList toys={toys} onRemoveToy={onRemoveToy} />
         </main>
     )
 }
