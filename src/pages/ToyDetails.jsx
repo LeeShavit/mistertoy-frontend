@@ -6,11 +6,14 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import { toyService } from "../services/toy.service";
 import { showErrorMsg } from "../services/event-bus.service";
+import { useSelector } from "react-redux";
+import { ToyReviews } from "../cmps/ToyReviews";
 
 export function ToyDetails() {
 
     const { toyId } = useParams()
     const [toy, setToy] = useState(null)
+    const user = useSelector(storeState => storeState.userModule.loggedInUser)
     const [msgToEdit, setMsgToEdit]= useState(toyService.getEmptyMsg())
     const navigate = useNavigate()
 
@@ -96,6 +99,7 @@ export function ToyDetails() {
             </form>
             <Link className="btn" to={`/toy/edit/${toy._id}`}><EditIcon /></Link>
             <Link className="btn" to='/toy'><ArrowBackIcon /></Link>
+            <ToyReviews user={user}/>
         </section>
     )
 }
