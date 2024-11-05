@@ -19,7 +19,8 @@ export const toyService = {
     getLabelsStats,
 
     addToyMsg,
-    removeToyMsg
+    removeToyMsg,
+    getEmptyMsg,
 }
 
 function query(filterBy) {
@@ -57,16 +58,12 @@ function getEmptyToy() {
         price: '',
         labels: [],
         inStock: true,
+        msgs: [],
     }
 }
 
 function getDefaultFilter() {
     return { name: '', price: '', inStock: '', labels: [], sort: '', pageIdx: '' }
-    //filter by:
-    // name= use debounce
-    // inStock = true/false/null
-    // label= 'baby'/'art'/'puzzle'
-    // sort= 'name'/'price'/'created'
 }
 
 function getFilterFromSearchParams(searchParams) {
@@ -111,6 +108,11 @@ async function getLabelsStats() {
     }
 }
 
+function getEmptyMsg() {
+    return {
+      txt: '',
+    }
+  }
 
 // function _createToy() {
 //     return {

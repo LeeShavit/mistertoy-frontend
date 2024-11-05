@@ -11,11 +11,12 @@ export function ToyDetails() {
 
     const { toyId } = useParams()
     const [toy, setToy] = useState(null)
+    const [msgToEdit, setMsgToEdit]= useState(toyService.getEmptyMsg())
     const navigate = useNavigate()
 
     useEffect(() => {
         loadToy()
-    }, [])
+    }, [toyId])
 
     async function loadToy() {
         try {
@@ -28,11 +29,20 @@ export function ToyDetails() {
         }
     }
 
-    async function onAddMsg() {
-        const msg = prompt('Write message here')
+    function handleMsgChange(ev) {
+        const field = ev.target.name
+        const value = ev.target.value
+        setMsgToEdit((msg) => ({ ...msg, [field]: value }))
+      }
+
+    async function onAddMsg(ev) {
+        ev.preventDefault()
         try {
-            const savedMsg = await toyService.addToyMsg(toy._id, msg)
-            setToy(prevToy => ({ ...prevToy, msgs: [...prevToy.msgs, savedMsg] }))
+            const savedMsg = await toyService.addToyMsg(toy._id, msgToEdit)
+            setToy(prevToy => ({
+                ...prevToy,
+                msgs: [...prevToy.msgs || [], savedMsg]
+            }))
         } catch (err) {
             console.log('Toy msgs-> failed to save msg', err)
             showErrorMsg('msg not saved')
@@ -42,7 +52,7 @@ export function ToyDetails() {
     async function onRemoveMsg(msgId) {
         try {
             await toyService.removeToyMsg(toy._id, msgId)
-            const newMsgs= toy.msgs.filter(msg=> msg.id !== msgId)
+            const newMsgs = toy.msgs.filter(msg => msg.id !== msgId)
             setToy(prevToy => ({ ...prevToy, msgs: newMsgs }))
         } catch (err) {
             console.log('Toy msgs-> failed to remove msg', err)
@@ -72,7 +82,18 @@ export function ToyDetails() {
                     </li>
                 ))}
             </ul>}
-            <button onClick={() => onAddMsg()}>Add Msg</button>
+            <form className="toy-add-msg" onSubmit={onAddMsg}>
+                <input
+                    type="text"
+                    name="txt"
+                    value={msgToEdit.txt}
+                    placeholder="Enter msg"
+                    onChange={handleMsgChange}
+                    required
+                    autoFocus
+                />
+                <button>Add message</button>
+            </form>
             <Link className="btn" to={`/toy/edit/${toy._id}`}><EditIcon /></Link>
             <Link className="btn" to='/toy'><ArrowBackIcon /></Link>
         </section>

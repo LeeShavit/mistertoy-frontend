@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSelector, useStore } from "react-redux";
+import { useSelector } from "react-redux";
 import AddIcon from '@mui/icons-material/Add';
 
 import { loadToys, removeToy } from "../store/actions/toy.actions.js";
@@ -13,9 +13,9 @@ import { Link } from "react-router-dom";
 
 export function ToyIndex() {
 
+    const user = useSelector(storeState => storeState.userModule.loggedInUser)
     const toys = useSelector(storeState => storeState.toyModule.toys)
     const [filterBy, setFilterBy] = useState(toyService.getDefaultFilter())
-
     useEffect(() => {
         loadToys(filterBy)
     }, [filterBy])
@@ -33,8 +33,10 @@ export function ToyIndex() {
     return (
         <main className="toy-index">
             <ToyFilter filterBy={filterBy} setFilterBy={setFilterBy} />
-            <Link to='/toy/edit' className="btn"><AddIcon /></Link>
-            <ToyList toys={toys} onRemoveToy={onRemoveToy} />
+            {user && user.isAdmin && (
+                <Link to='/toy/edit' className="btn"><AddIcon /></Link>
+            )}
+            <ToyList toys={toys} onRemoveToy={onRemoveToy} user={user}/>
         </main>
     )
 }
