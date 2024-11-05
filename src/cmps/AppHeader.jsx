@@ -30,14 +30,15 @@ export function AppHeader() {
         <header className="app-header full main-layout">
             {isMenuOpen && <div className='backdrop' onClick={() => setIsMenuOpen(false)}></div>}
             <section className="header-container full">
-                <img src='./src/assets/img/icon.svg' />
+                <img src='/src/assets/img/icon.svg'/>
                 <nav className={`app-nav ${isMenuOpen ? 'active' : ''}`}>
                     <NavLink to="/" >Home</NavLink>
                     <NavLink to="/about" >About</NavLink>
                     <NavLink to="/toy" >Toys</NavLink>
                     <NavLink to="/dashboard" >Dashboard</NavLink>
+                    <NavLink to="/review" >Reviews</NavLink>
                     {loggedInUser &&
-                        <BasicMenu fullname={loggedInUser.fullname} onLogout={onLogout} />
+                        <BasicMenu loggedInUser={loggedInUser} onLogout={onLogout} />
                     }
                     <UserMsg />
                 </nav>

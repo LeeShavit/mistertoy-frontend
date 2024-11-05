@@ -11,6 +11,8 @@ import { ToyDetails } from './pages/ToyDetails.jsx'
 import { ToyEdit } from './pages/ToyEdit.jsx'
 import { store } from './store/store.js'
 import { AppHeader } from './cmps/AppHeader.jsx'
+import { UserDetails } from './pages/UserDetails.jsx'
+import { ReviewExplore } from './pages/ReviewExplore.jsx'
 
 function App() {
 
@@ -25,6 +27,8 @@ function App() {
           <Route element={<ToyIndex />} path='/toy' />
           <Route element={<ToyDetails />} path='/toy/:toyId' />
           <Route element={<ToyEdit />} path='/toy/edit/:toyId?' />
+          <Route element={<UserDetails />} path='/user/:userId' />
+          <Route element={<ReviewExplore />} path='/review' />
           <Route element={<Dashboard />} path='/dashboard' />
         </Routes>
       </Router>

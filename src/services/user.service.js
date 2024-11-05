@@ -10,9 +10,11 @@ export const userService = {
     logout,
     signup,
     getById,
+    query,
     getLoggedinUser,
     updateBalance,
-    getEmptyCredentials
+    getEmptyCredentials,
+    getUsersList,
 }
 
 
@@ -70,6 +72,11 @@ async function getById(userId) {
     }
 }
 
+async function query(filterBy) {
+    return httpService.get(BASE_URL, filterBy)
+}    
+
+
 function getLoggedinUser() {
     return JSON.parse(sessionStorage.getItem(STORAGE_KEY_LOGGEDIN))
 }
@@ -87,3 +94,16 @@ function getEmptyCredentials() {
         fullname: ''
     }
 }
+
+async function getUsersList(){
+    try{
+        const users= await query()
+        console.log(users)
+        const list= users.map(user=> `${user.fullname}^${user._id}`)
+        return list
+    }catch(err){
+        console.log('failed to get list of users' + err)
+        throw err
+    }
+}
+ 

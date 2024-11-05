@@ -6,9 +6,8 @@ export async function loadToys(filterBy) {
     try {
         const toys = await toyService.query(filterBy)
         store.dispatch({ type: SET_TOYS, toys })
-        return toys
     } catch (err) {
-        console.log('car action -> cannot load toys', err)
+        console.log('toy action -> cannot load toys', err)
         throw err
     }
 }

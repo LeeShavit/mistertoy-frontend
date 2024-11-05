@@ -41,7 +41,7 @@ function getEmptyReview() {
 }
 
 function getDefaultFilter() {
-    return { txt: '', toyId: '', userId: '' }
+    return { txt: '', toys: [], users: [] }
 }
 
 function getFilterFromSearchParams(searchParams) {

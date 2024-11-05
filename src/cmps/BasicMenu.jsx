@@ -3,9 +3,10 @@ import Button from '@mui/material/Button'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import { Avatar } from '@mui/material'
+import { Link } from 'react-router-dom'
 
 
-export default function BasicMenu({fullname, onLogout}) {
+export default function BasicMenu({loggedInUser, onLogout}) {
   const [anchorEl, setAnchorEl] = React.useState(null)
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -24,7 +25,7 @@ export default function BasicMenu({fullname, onLogout}) {
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
         >
-          <Avatar>{fullname[0]}</Avatar>
+          <Avatar>{loggedInUser.fullname[0]}</Avatar>
       </Button>
       <Menu
         id="basic-menu"
@@ -35,8 +36,9 @@ export default function BasicMenu({fullname, onLogout}) {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
+        <MenuItem >
+        <Link to={`/user/${loggedInUser._id}`}>Profile</Link>
+        </MenuItem>
         <MenuItem onClick={()=> onLogout()}>Logout</MenuItem>
       </Menu>
     </div>

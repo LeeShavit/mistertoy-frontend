@@ -21,6 +21,7 @@ export const toyService = {
     addToyMsg,
     removeToyMsg,
     getEmptyMsg,
+    getToysList,
 }
 
 function query(filterBy) {
@@ -113,6 +114,17 @@ function getEmptyMsg() {
       txt: '',
     }
   }
+
+async function getToysList(){
+    try{
+        const toys= await query()
+        const list= toys.map(toy=>  `${toy.name}^${toy._id}`)
+        return list
+    }catch(err){
+        console.log('failed to get list of toys' + err)
+        throw err
+    }
+}
 
 // function _createToy() {
 //     return {

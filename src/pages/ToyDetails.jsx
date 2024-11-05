@@ -7,7 +7,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { toyService } from "../services/toy.service";
 import { showErrorMsg } from "../services/event-bus.service";
 import { useSelector } from "react-redux";
-import { ToyReviews } from "../cmps/ToyReviews";
+import { ReviewsList } from "../cmps/ReviewsList";
 
 export function ToyDetails() {
 
@@ -99,7 +99,7 @@ export function ToyDetails() {
             </form>
             <Link className="btn" to={`/toy/edit/${toy._id}`}><EditIcon /></Link>
             <Link className="btn" to='/toy'><ArrowBackIcon /></Link>
-            <ToyReviews user={user}/>
+            <ReviewsList filterBy={{toys:[toy._id]}} user={user} isToyDisplay={true}/>
         </section>
     )
 }

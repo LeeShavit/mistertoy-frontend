@@ -9,20 +9,19 @@ import { useState, useEffect } from 'react';
 
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service.js';
 
-export function ToyReviews({ user }) {
+export function ReviewsList({filterBy, user ,isToyDisplay= false}) {
 
     const { toyId } = useParams()
     const [reviews, setReviews] = useState(null)
     const [reviewToEdit, setReviewToEdit] = useState(reviewService.getEmptyReview())
 
-
     useEffect(() => {
         loadReviews()
-    }, [])
+    }, [filterBy])
 
     async function loadReviews() {
         try {
-            const reviews = await reviewService.query({ toyId })
+            const reviews = await reviewService.query(filterBy)
             setReviews(reviews)
         } catch (err) {
             console.log('failed to load reviews', err)
@@ -61,8 +60,9 @@ export function ToyReviews({ user }) {
     if (!reviews) return <div>Loading..</div>
 
     return (
-        <>
-            {user && <form className="toy-add-review" onSubmit={onAddReview}>
+        <div className='reviews'>
+            {user && isToyDisplay && 
+            <form className="add-review" onSubmit={onAddReview}>
                 <input
                     type="text"
                     name="txt"
@@ -72,12 +72,12 @@ export function ToyReviews({ user }) {
                     required
                     autoFocus
                 />
-                <button>Add message</button>
+                <button>Add Review</button>
             </form>}
             <ul className="review-list">
                 {reviews.map((review) => (
                     <li key={review._id} className="review-card">
-                        <ReviewPreview review={review} />
+                        <ReviewPreview review={review} isToyDisplay={isToyDisplay}/>
                         {user && user.isAdmin && (
                             <div className="review-actions">
                                 <button className="btn btn-sm" onClick={() => onRemoveReview(review._id)}><DeleteIcon /></button>
@@ -86,6 +86,6 @@ export function ToyReviews({ user }) {
                     </li>
                 ))}
             </ul>
-        </>
+        </div>
     )
 }

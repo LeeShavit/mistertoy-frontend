@@ -32,7 +32,7 @@ export function ToyFilter({ filterBy, setFilterBy }) {
         setFilterBy(filterByToEdit)
     }
 
-    function handleLabelChange(value) {
+    function handleSelectChange(value) {
         setFilterByToEdit(prevToy => ({ ...prevToy, labels: value }))
     }
 
@@ -72,9 +72,7 @@ export function ToyFilter({ filterBy, setFilterBy }) {
                         <option value="price">Price</option>
                         <option value="created">Date</option>
                     </select>
-                    <MultiSelect className="select" parentLabels={filterByToEdit.labels} handleChangeLabels={handleLabelChange} />
-
-
+                    <MultiSelect className="select" options={options} parentOptions={filterByToEdit.labels} handleSelectChange={handleSelectChange} field={'labels'} />
                 </div>
             </form>
             <div className="filter-btns">

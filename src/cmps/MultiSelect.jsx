@@ -20,30 +20,28 @@ const MenuProps = {
     },
 };
 
-const labels = toyService.getLabels()
-
-function getStyles(label, selectedLabels, theme) {
+function getStyles(option, selectedOptions, theme) {
     return {
-        fontWeight: selectedLabels.includes(label)
+        fontWeight: selectedOptions.includes(option)
             ? theme.typography.fontWeightMedium
             : theme.typography.fontWeightRegular,
     };
 }
 
-export function MultiSelect({parentLabels, handleChangeLabels}) {
+export function MultiSelect({options, parentOptions, handleSelectChange, field}) {
     const theme = useTheme();
-    const [selectedLabels, setSelectedLabels] = useState(parentLabels);
+    const [selectedOptions, setSelectedOptions] = useState(parentOptions);
 
     useEffect(()=>{
-        handleChangeLabels(selectedLabels)
-    },[selectedLabels])
+        handleSelectChange(selectedOptions,field)
+    },[selectedOptions,options])
 
 
     const handleChange = (event) => {
         const {
             target: { value },
         } = event;
-        setSelectedLabels(
+        setSelectedOptions(
             typeof value === 'string' ? value.split(',') : value,
         )
     }
@@ -51,30 +49,30 @@ export function MultiSelect({parentLabels, handleChangeLabels}) {
     return (
         <div>
             <FormControl sx={{ m: 1, width: 305 }}>
-                <InputLabel id="demo-multiple-chip-label">Labels</InputLabel>
+                <InputLabel id="demo-multiple-chip-label">{field}</InputLabel>
                 <Select
                     labelId="demo-multiple-chip-label"
                     id="demo-multiple-chip"
                     multiple
-                    value={selectedLabels}
+                    value={selectedOptions}
                     onChange={handleChange}
                     input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
                     renderValue={(selected) => (
                         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                             {selected.map((value) => (
-                                <Chip key={value} label={value} />
+                                <Chip key={value} label={value.split('^')[0]} />
                             ))}
                         </Box>
                     )}
                     MenuProps={MenuProps}
                 >
-                    {labels.map((label) => (
+                    {options.map((option) => (
                         <MenuItem
-                            key={label}
-                            value={label}
-                            style={getStyles(label, selectedLabels, theme)}
+                            key={option}
+                            value={option}
+                            style={getStyles(option, selectedOptions, theme)}
                         >
-                            {label}
+                            {option.split('^')[0]}
                         </MenuItem>
                     ))}
                 </Select>
