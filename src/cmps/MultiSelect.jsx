@@ -34,7 +34,7 @@ export function MultiSelect({options, parentOptions, handleSelectChange, field})
 
     useEffect(()=>{
         handleSelectChange(selectedOptions,field)
-    },[selectedOptions,options])
+    },[selectedOptions])
 
 
     const handleChange = (event) => {

@@ -25,15 +25,15 @@ export function ToyFilter({ filterBy, setFilterBy }) {
         value = type === 'checkbox' ? checked : value
         setFilterByToEdit(prevToy => ({ ...prevToy, [field]: value }))
     }
-
-
+    
+    
     function onSaveFilterBy(ev) {
         ev.preventDefault()
         setFilterBy(filterByToEdit)
     }
-
+    
     function handleSelectChange(value) {
-        setFilterByToEdit(prevToy => ({ ...prevToy, labels: value }))
+        setFilterByToEdit(prevFilter => ({ ...prevFilter, labels: value }))
     }
 
     return (

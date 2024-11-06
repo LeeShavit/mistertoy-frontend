@@ -6,6 +6,7 @@ export async function loadToys(filterBy) {
     try {
         const toys = await toyService.query(filterBy)
         store.dispatch({ type: SET_TOYS, toys })
+        return toys
     } catch (err) {
         console.log('toy action -> cannot load toys', err)
         throw err
@@ -14,7 +15,7 @@ export async function loadToys(filterBy) {
 
 export async function removeToy(toyId) {
     try {
-        const toys = await toyService.remove(toyId)
+        await toyService.remove(toyId)
         store.dispatch({ type: REMOVE_TOY, toyId })
     } catch (err) {
         console.log(`toy action -> cannot remove toy ${toyId}`, err)
@@ -24,9 +25,10 @@ export async function removeToy(toyId) {
 
 export async function saveToy(toy) {
     try {
-        const savedToy = toyService.save(toy)
+        const savedToy = await toyService.save(toy)
+        console.log(savedToy)
         const type = toy._id ? UPDATE_TOY : ADD_TOY
-        store.dispatch({ type, savedToy })
+        store.dispatch({ type, toy })
         return savedToy
     } catch (err) {
         console.log('toy action -> cannot save toy', err)

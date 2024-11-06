@@ -23,7 +23,7 @@ export function toyReducer(state = initialState, cmd = {}){
         case UPDATE_TOY: 
         return{
             ...state,
-            toys: state.toys.map(toy=> toy._id === cmd.toy._id ? cmd.toy : toy)
+            toys: state.toys.map(toy=> (toy._id === cmd.toy._id) ? cmd.toy : toy)
         }
         case ADD_TOY: 
         return{

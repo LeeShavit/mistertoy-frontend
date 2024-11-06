@@ -43,13 +43,11 @@ export function ReviewExplore() {
 
     function onSaveFilterBy(ev) {
         ev.preventDefault()
-        setFilterBy(filterBy)
     }
 
     function handleSelectChange(value,field) {
         value= value.length ? value.map(val=> val.split('^')[1]) : ''
         setFilterBy(prevFilter => ({ ...prevFilter, [field]: value }))
-        console.log(filterBy)
     }
 
     return (

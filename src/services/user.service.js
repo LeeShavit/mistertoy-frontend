@@ -98,7 +98,6 @@ function getEmptyCredentials() {
 async function getUsersList(){
     try{
         const users= await query()
-        console.log(users)
         const list= users.map(user=> `${user.fullname}^${user._id}`)
         return list
     }catch(err){

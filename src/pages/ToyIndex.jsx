@@ -16,6 +16,7 @@ export function ToyIndex() {
     const user = useSelector(storeState => storeState.userModule.loggedInUser)
     const toys = useSelector(storeState => storeState.toyModule.toys)
     const [filterBy, setFilterBy] = useState(toyService.getDefaultFilter())
+
     useEffect(() => {
         loadToys(filterBy)
     }, [filterBy])
